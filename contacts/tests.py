@@ -1,20 +1,15 @@
 from django.test import TestCase
 from django.core.files.uploadedfile import SimpleUploadedFile
 from rest_framework.test import APITestCase
-
 from .models import Contact, ContactStatus
 from .serializers import ContactSerializer
 
 
 class ContactModelTest(TestCase):
-    """Test cases for Contact model creation and relationships."""
-
     def setUp(self):
-        """Set up test data."""
         self.status = ContactStatus.objects.create(name="new")
 
     def test_contact_creation(self):
-        """Test that a contact can be created with all required fields."""
         contact = Contact.objects.create(
             first_name="John",
             last_name="Doe",
@@ -33,7 +28,6 @@ class ContactModelTest(TestCase):
         self.assertIsNotNone(contact.created_at)
 
     def test_contact_str_representation(self):
-        """Test the string representation of a contact."""
         contact = Contact.objects.create(
             first_name="Jane",
             last_name="Smith",
@@ -46,7 +40,6 @@ class ContactModelTest(TestCase):
         self.assertEqual(str(contact), "Jane Smith")
 
     def test_contact_phone_number_unique(self):
-        """Test that phone numbers must be unique."""
         Contact.objects.create(
             first_name="John",
             last_name="Doe",
@@ -55,8 +48,6 @@ class ContactModelTest(TestCase):
             city="Warsaw",
             status=self.status
         )
-        
-        # Try to create another contact with the same phone number
         with self.assertRaises(Exception):
             Contact.objects.create(
                 first_name="Jane",
@@ -69,14 +60,10 @@ class ContactModelTest(TestCase):
 
 
 class ContactSerializerTest(APITestCase):
-    """Test cases for Contact API serializer validation."""
-
     def setUp(self):
-        """Set up test data."""
         self.status = ContactStatus.objects.create(name="new")
 
     def test_serializer_requires_phone_and_email_on_create(self):
-        """Test that phone_number and email are required when creating a contact."""
         serializer = ContactSerializer(data={
             "first_name": "John",
             "last_name": "Doe",
@@ -89,7 +76,6 @@ class ContactSerializerTest(APITestCase):
         self.assertIn("email", serializer.errors)
 
     def test_serializer_allows_phone_and_email_optional_on_update(self):
-        """Test that phone_number and email are optional when updating a contact."""
         contact = Contact.objects.create(
             first_name="John",
             last_name="Doe",
@@ -113,7 +99,6 @@ class ContactSerializerTest(APITestCase):
         self.assertTrue(serializer.is_valid(), serializer.errors)
 
     def test_serializer_validates_successfully_with_all_fields(self):
-        """Test that serializer validates successfully when all required fields are provided."""
         serializer = ContactSerializer(data={
             "first_name": "John",
             "last_name": "Doe",
@@ -130,18 +115,12 @@ class ContactSerializerTest(APITestCase):
 
 
 class CsvImportTest(TestCase):
-    """Test cases for CSV import functionality with status normalization."""
 
     def setUp(self):
-        """Set up test data."""
-        # Ensure a default status exists
         self.default_status = ContactStatus.objects.create(name="new")
 
     def test_csv_import_creates_contacts(self):
-        """Test that CSV import creates contacts correctly."""
         from django.test import Client
-        
-        # Create CSV content
         csv_content = "first_name,last_name,phone_number,email,city,status\n"
         csv_content += "John,Doe,+48123456789,john.doe@example.com,Warsaw,new\n"
         
@@ -153,8 +132,6 @@ class CsvImportTest(TestCase):
         
         client = Client()
         response = client.post('/import/', {'file': csv_file})
-        
-        # Check that contact was created
         self.assertEqual(Contact.objects.count(), 1)
         contact = Contact.objects.first()
         self.assertEqual(contact.first_name, "John")
@@ -162,11 +139,8 @@ class CsvImportTest(TestCase):
         self.assertEqual(contact.status.name, "new")
 
     def test_csv_import_normalizes_polish_status_to_english(self):
-        """Test that CSV import normalizes Polish status names to English."""
         from django.test import Client
         from .views import STATUS_NAME_MAPPING
-        
-        # Create CSV content with Polish status
         csv_content = "first_name,last_name,phone_number,email,city,status\n"
         csv_content += "Jan,Kowalski,+48111111111,jan.kowalski@example.com,Warsaw,nowy\n"
         
@@ -178,23 +152,16 @@ class CsvImportTest(TestCase):
         
         client = Client()
         response = client.post('/import/', {'file': csv_file})
-        
-        # Check that status was normalized from "nowy" (Polish) to "new" (English)
         contact = Contact.objects.first()
-        self.assertEqual(contact.status.name, "new")  # Should be English, not "nowy"
-        
-        # Verify that only English status exists, not Polish
+        self.assertEqual(contact.status.name, "new")
         polish_status = ContactStatus.objects.filter(name="nowy").first()
         self.assertIsNone(polish_status, "Polish status 'nowy' should not be created")
 
     def test_csv_import_skips_incomplete_rows(self):
-        """Test that CSV import skips rows with missing required fields."""
         from django.test import Client
-        
-        # Create CSV content with incomplete row
         csv_content = "first_name,last_name,phone_number,email,city,status\n"
         csv_content += "John,Doe,+48123456789,john.doe@example.com,Warsaw,new\n"
-        csv_content += "Jane,,+48987654321,jane@example.com,Warsaw,new\n"  # Missing last_name
+        csv_content += "Jane,,+48987654321,jane@example.com,Warsaw,new\n"
         
         csv_file = SimpleUploadedFile(
             "test.csv",
@@ -204,8 +171,6 @@ class CsvImportTest(TestCase):
         
         client = Client()
         response = client.post('/import/', {'file': csv_file})
-        
-        # Only one contact should be created (the complete one)
         self.assertEqual(Contact.objects.count(), 1)
         contact = Contact.objects.first()
         self.assertEqual(contact.first_name, "John")

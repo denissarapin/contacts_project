@@ -1,0 +1,26 @@
+first_name,last_name,phone_number,email,city,status
+Weronika,Szymański,+48946375202,weronika.szymanski1@example.pl,Poznań,nowy
+Paweł,Grabowski,+48601106656,pawel.grabowski2@example.pl,Szczecin,zagubiony
+Monika,Lewandowski,+48679984952,monika.lewandowski3@example.pl,Katowice,zagubiony
+Weronika,Mazur,+48076409368,weronika.mazur4@example.pl,Wrocław,zagubiony
+Paweł,Grabowski,+48659263115,pawel.grabowski5@example.pl,Gdańsk,w trakcie
+Katarzyna,Michalski,+48818739155,katarzyna.michalski6@example.pl,Warszawa,nieaktualny
+Piotr,Król,+48382498671,piotr.krol7@example.pl,Kraków,w trakcie
+Łukasz,Kowalski,+48692218057,lukasz.kowalski8@example.pl,Rzeszów,nowy
+Jan,Wójcik,+48774779413,jan.wojcik9@example.pl,Szczecin,zagubiony
+Zuzanna,Jankowski,+48796439067,zuzanna.jankowski10@example.pl,Katowice,nieaktualny
+Piotr,Wójcik,+48846689332,piotr.wojcik11@example.pl,Wrocław,nieaktualny
+Paweł,Pawlak,+48757872420,pawel.pawlak12@example.pl,Toruń,zagubiony
+Krzysztof,Woźniak,+48692874741,krzysztof.wozniak13@example.pl,Łódź,nowy
+Agnieszka,Nowak,+48729279665,agnieszka.nowak14@example.pl,Bydgoszcz,w trakcie
+Magdalena,Kowalczyk,+48784486439,magdalena.kowalczyk15@example.pl,Białystok,w trakcie
+Ewa,Dąbrowski,+48461646806,ewa.dabrowski16@example.pl,Lublin,nowy
+Michał,Piotrowska,+48379212367,michal.piotrowska17@example.pl,Gdynia,nieaktualny
+Tomasz,Wiśniewski,+48853647928,tomasz.wisniewski18@example.pl,Warszawa,zagubiony
+Joanna,Kozłowska,+48242930744,joanna.kozlowska19@example.pl,Gliwice,w trakcie
+Adam,Krawczyk,+48671282944,adam.krawczyk20@example.pl,Poznań,nieaktualny
+Natalia,Kowalczyk,+48975484041,natalia.kowalczyk21@example.pl,Katowice,nowy
+Marcin,Mazur,+48821744090,marcin.mazur22@example.pl,Gdańsk,w trakcie
+Jakub,Zielińska,+48575357346,jakub.zielinska23@example.pl,Kraków,zagubiony
+Anna,Kowalski,+48326281186,anna.kowalski24@example.pl,Rzeszów,nieaktualny
+Agnieszka,Nowak,+48777910868,agnieszka.nowak25@example.pl,Toruń,w trakcie

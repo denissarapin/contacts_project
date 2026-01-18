@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title mb-3 text-center">{{ title }}</h5>
+
+    <form method="post" class="needs-validation" novalidate>
+      {% csrf_token %}
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">
+            {{ form.first_name.label }}
+            <span class="text-danger">*</span>
+          </label>
+          {{ form.first_name }}
+          {% if form.first_name.errors %}
+            <div class="invalid-feedback d-block">
+              {{ form.first_name.errors|striptags }}
+            </div>
+          {% else %}
+            <div class="invalid-feedback">Please provide a valid value.</div>
+          {% endif %}
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">
+            {{ form.last_name.label }}
+            <span class="text-danger">*</span>
+          </label>
+          {{ form.last_name }}
+          {% if form.last_name.errors %}
+            <div class="invalid-feedback d-block">
+              {{ form.last_name.errors|striptags }}
+            </div>
+          {% else %}
+            <div class="invalid-feedback">Please provide a valid value.</div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">
+            {{ form.email.label }}
+            <span class="text-danger">*</span>
+          </label>
+          {{ form.email }}
+          {% if form.email.errors %}
+            <div class="invalid-feedback d-block">
+              {{ form.email.errors|striptags }}
+            </div>
+          {% else %}
+            <div class="invalid-feedback">Please provide a valid value.</div>
+          {% endif %}
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">
+            {{ form.phone_number.label }}
+            <span class="text-danger">*</span>
+          </label>
+          <div class="input-group">
+            <span class="input-group-text">🇵🇱 +48</span>
+            {{ form.country_code }}
+            {{ form.phone_number }}
+          </div>
+          {% if form.phone_number.errors %}
+            <div class="invalid-feedback d-block">
+              {{ form.phone_number.errors|striptags }}
+            </div>
+          {% else %}
+            <div class="invalid-feedback">Please provide a valid value.</div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">
+          {{ form.city.label }}
+          <span class="text-danger">*</span>
+        </label>
+        {{ form.city }}
+        {% if form.city.errors %}
+          <div class="invalid-feedback d-block">
+            {{ form.city.errors|striptags }}
+          </div>
+        {% else %}
+          <div class="invalid-feedback">Please provide a valid value.</div>
+        {% endif %}
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">
+          {{ form.status.label }}
+          <span class="text-danger">*</span>
+        </label>
+        {{ form.status }}
+        {% if form.status.errors %}
+          <div class="invalid-feedback d-block">
+            {{ form.status.errors|striptags }}
+          </div>
+        {% else %}
+          <div class="invalid-feedback">Please provide a valid value.</div>
+        {% endif %}
+      </div>
+
+      <button class="btn btn-primary" type="submit">Save</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

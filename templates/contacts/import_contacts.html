@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Import CSV{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title mb-3">Import CSV</h5>
+
+    <div class="alert alert-light border">
+      Expected headers: first_name,last_name,phone_number,email,city,status
+    </div>
+
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label class="form-label">CSV file</label>
+        {{ form.file }}
+      </div>
+      <div class="d-flex gap-2">
+        <button class="btn btn-primary" type="submit">Import</button>
+        <a class="btn btn-outline-secondary" href="{% url 'contacts:contact_list' %}">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
